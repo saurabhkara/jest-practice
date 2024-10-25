@@ -57,4 +57,11 @@ describe("Multiplication", () => {
     expect(() => errorThrow()).toThrow("File not found");
     expect(() => errorThrow()).toThrow(/not found/);
   });
+
+  test("Function mocking", () => {
+    const isValid = jest.fn(() => true);
+    isValid();
+    expect(isValid).toHaveReturned();
+    expect(isValid).toHaveReturnedWith(true);
+  });
 });
