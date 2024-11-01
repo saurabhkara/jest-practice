@@ -1,6 +1,6 @@
 //Test Suite
 
-const multiply = require("./index");
+const { multiply, fetchData } = require("./index");
 
 describe("Multiplication", () => {
   test("2 and 5 multiply equals to 10", () => {
@@ -13,6 +13,7 @@ describe("Multiplication", () => {
     };
     expect(obj1).toEqual({ name: "Saurabh" });
   });
+
   test("Next matchers", () => {
     const testVar = null;
     expect(testVar).toBeNull();
@@ -58,10 +59,48 @@ describe("Multiplication", () => {
     expect(() => errorThrow()).toThrow(/not found/);
   });
 
+  //Function mocking
+
   test("Function mocking", () => {
     const isValid = jest.fn(() => true);
     isValid();
     expect(isValid).toHaveReturned();
     expect(isValid).toHaveReturnedWith(true);
+  });
+
+  // Async  testing
+
+  test("Async function Unit testing", () => {
+    fetchData().then((data) => {
+      expect(data).toBe("Resolved");
+    });
+  });
+
+  test("Async function unit testng using async", async () => {
+    const data = await fetchData();
+    expect(data).toBe("Resolved");
+  });
+
+  test("Async function unit testing for error throw using async", async () => {
+    try {
+      await fetchData(true);
+    } catch (error) {
+      expect(error).toBe("Rejected, error occured");
+    }
+  });
+
+  test("Async function uni testing for error", () => {
+    fetchData(true)
+      .then((data) => {
+        expect(data).toBe("Resolved");
+      })
+      .catch((error) => {
+        expect(error).toBe("Rejected, error occured");
+      });
+  });
+
+  test("Async function using resolves and rejects matcher", async () => {
+    await expect(fetchData()).resolves.toBe("Resolved");
+    await expect(fetchData(true)).rejects.toBe("Rejected, error occured");
   });
 });
