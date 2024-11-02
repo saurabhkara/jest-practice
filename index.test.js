@@ -1,6 +1,8 @@
 //Test Suite
-
-const { multiply, fetchData } = require("./index");
+jest.mock("./mathUtils");
+const { multiply, fetchData, calculator, calledOnce } = require("./index.js");
+const allMethod = require("./index.js");
+const { add } = require("./mathUtils.js");
 
 describe("Multiplication", () => {
   test("2 and 5 multiply equals to 10", () => {
@@ -102,5 +104,26 @@ describe("Multiplication", () => {
   test("Async function using resolves and rejects matcher", async () => {
     await expect(fetchData()).resolves.toBe("Resolved");
     await expect(fetchData(true)).rejects.toBe("Rejected, error occured");
+  });
+});
+
+//Mocking
+
+describe("Mocking functions", () => {
+  test("Calculation", () => {
+    calculator(5, 3, "addition");
+    expect(add).toHaveBeenCalled();
+    // expect(add).toHaveBeenCalledWith(5, 3);
+  });
+});
+
+//SpyOn
+
+describe("SpyOn method", () => {
+  test("Spying calledOnce method", () => {
+    const spy = jest.spyOn(allMethod, "calledOnce"); //method name and second argument name should be same
+    allMethod.calledOnce();
+    expect(spy).toHaveBeenCalled();
+    spy.mockRestore();
   });
 });
