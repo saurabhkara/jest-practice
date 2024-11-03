@@ -1,8 +1,9 @@
 //Test Suite
 jest.mock("./mathUtils");
-const { multiply, fetchData, calculator, calledOnce } = require("./index.js");
+const { multiply, fetchData, calculator } = require("./index.js");
 const allMethod = require("./index.js");
 const { add } = require("./mathUtils.js");
+const { addToArray, removeItem } = require("./arrayOper.js");
 
 describe("Multiplication", () => {
   test("2 and 5 multiply equals to 10", () => {
@@ -131,23 +132,27 @@ describe("SpyOn method", () => {
 //Setup and teardown
 
 describe("Setup and teardown describe", () => {
+  let arr;
   beforeAll(() => {
     console.log("Before all test block");
+    arr = [];
   });
   beforeEach(() => {
     console.log("Before Each test block");
+    arr = [];
   });
 
   afterEach(() => {
     console.log("After each block test block");
+    arr = [];
   });
 
   afterAll(() => {
-    console.log("After all test block");
+    console.log("After all test block", arr);
   });
 
   test("Setup and teardown test", () => {
-    let flag = true;
-    expect(flag).toBeTruthy();
+    addToArray(arr, "Saurabh");
+    expect(arr).toContain("Saurabh");
   });
 });
