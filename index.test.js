@@ -127,3 +127,27 @@ describe("SpyOn method", () => {
     spy.mockRestore();
   });
 });
+
+//Setup and teardown
+
+describe("Setup and teardown describe", () => {
+  beforeAll(() => {
+    console.log("Before all test block");
+  });
+  beforeEach(() => {
+    console.log("Before Each test block");
+  });
+
+  afterEach(() => {
+    console.log("After each block test block");
+  });
+
+  afterAll(() => {
+    console.log("After all test block");
+  });
+
+  test("Setup and teardown test", () => {
+    let flag = true;
+    expect(flag).toBeTruthy();
+  });
+});
